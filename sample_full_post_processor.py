@@ -39,7 +39,8 @@ if __name__ == "__main__":
 
     lines = []
     while True:
-        l = sys.stdin.readline()
+        l = sys.stdin.buffer.readline()
+        l = l.decode('utf-8')
         if not l: break # EOF
         if l.strip() == "":
             if len(lines) > 0:
