@@ -354,11 +354,12 @@ class Worker():
     @tornado.gen.coroutine
     def post_process_full(self, full_result):
         if self.full_post_processor:
-            self.full_post_processor.stdin.write("%s\n\n" % json.dumps(full_result))
+            self.full_post_processor.stdin.write(f"{json.dumps(full_result).encode('utf-8')}\n\n")
             self.full_post_processor.stdin.flush()
             lines = []
             while True:
                 l = self.full_post_processor.stdout.readline()
+                l = l.decode('utf-8')
                 if not l: break # EOF
                 if l.strip() == "":
                     break
